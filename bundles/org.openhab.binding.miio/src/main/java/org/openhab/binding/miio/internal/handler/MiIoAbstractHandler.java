@@ -678,6 +678,7 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
     private void parseDeviceList(String str){
         GatewayDevicesList message = new Gson().fromJson(str, GatewayDevicesList.class);
         logger.info("Found devices count: {}", message.result.size());
+        logger.info("Devices: " + str);
         //if(bridge != null)
         //    bridge.getDevicesListRequestCompleted(message);
 
