@@ -47,6 +47,9 @@ import org.openhab.binding.miio.internal.Utils;
 import org.openhab.binding.miio.internal.basic.MiIoDatabaseWatchService;
 import org.openhab.binding.miio.internal.cloud.CloudConnector;
 import org.openhab.binding.miio.internal.transport.MiIoAsyncCommunication;
+
+import org.openhab.binding.miio.internal.json.GatewayDevicesList;
+
 import org.openhab.core.cache.ExpiringCache;
 import org.openhab.core.common.NamedThreadFactory;
 import org.openhab.core.config.core.Configuration;
@@ -467,6 +470,11 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
 
     protected boolean initializeData() {
         this.miioCom = getConnection();
+
+        if (this.miioCom != null && this instanceof MiIoGatewayHandler) {
+            sendCommand(MiIoCommand.GET_DEVICE_LIST);
+        }
+
         return true;
     }
 
@@ -649,6 +657,9 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
                     }
                     updateNetwork(response.getResult().getAsJsonObject());
                     break;
+                case GET_DEVICE_LIST:
+                    parseDeviceList(response.getResponse().toString());
+                    break;
                 default:
                     break;
             }
@@ -662,5 +673,13 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
         } catch (Exception e) {
             logger.debug("Error while handing message {}", response.getResponse(), e);
         }
+    }
+
+    private void parseDeviceList(String str){
+        GatewayDevicesList message = new Gson().fromJson(str, GatewayDevicesList.class);
+        logger.info("Found devices count: {}", message.result.size());
+        //if(bridge != null)
+        //    bridge.getDevicesListRequestCompleted(message);
+
     }
 }

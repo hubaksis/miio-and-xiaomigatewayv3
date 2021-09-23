@@ -114,6 +114,10 @@ public enum MiIoCommand {
     GET_NIGHTLIGHT_RGB("get_night_light_rgb"),
     GET_LUMI_BIND("get_lumi_bind"),
 
+    TELNET_ENABLE("enable_telnet_service"),
+    
+    GET_DEVICE_LIST("get_device_list"),
+
     UNKNOWN("");
 
     private final String command;
