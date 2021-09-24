@@ -27,6 +27,13 @@ import org.openhab.core.thing.type.ChannelTypeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.openhab.binding.miio.internal.discovery.MiIoLumiSubdeviceDiscovery;
+import org.openhab.binding.miio.internal.json.GatewayDevicesList;
+
+import org.openhab.core.thing.binding.ThingHandlerService;
+import java.util.Collections;
+import java.util.Collection;
+
 /**
  * The {@link MiIoGatewayHandler} is responsible for handling commands, which are
  * sent to one of the channels.
@@ -37,6 +44,8 @@ import org.slf4j.LoggerFactory;
 public class MiIoGatewayHandler extends MiIoBasicHandler implements BridgeHandler {
 
     private final Logger logger = LoggerFactory.getLogger(MiIoGatewayHandler.class);
+
+    private @Nullable MiIoLumiSubdeviceDiscovery discoveryService;
 
     public MiIoGatewayHandler(Bridge thing, MiIoDatabaseWatchService miIoDatabaseWatchService,
             CloudConnector cloudConnector, ChannelTypeRegistry channelTypeRegistry,
@@ -78,4 +87,22 @@ public class MiIoGatewayHandler extends MiIoBasicHandler implements BridgeHandle
         return this;
     }
 
+    public void setDiscoveryService(MiIoLumiSubdeviceDiscovery discoveryService) {
+        this.discoveryService = discoveryService;
+    }
+
+    public void sendRequestForDeviceList(){
+        sendMiIoRequestToGetDeviceList();        
+    }
+
+    @Override
+    public Collection<Class<? extends ThingHandlerService>> getServices() {
+        return Collections.singleton(MiIoLumiSubdeviceDiscovery.class);
+    }
+
+    @Override
+    public void getDevicesListRequestCompleted(GatewayDevicesList deviceList){        
+        if(discoveryService != null)
+            discoveryService.createDisvoceryResult(deviceList);
+    }    
 }

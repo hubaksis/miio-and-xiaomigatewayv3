@@ -103,6 +103,8 @@ public enum MiIoDevices {
     LUMI_GATEWAY_V1("lumi.gateway.v1", "Mi smart Home Gateway Hub v1", THING_TYPE_GATEWAY),
     LUMI_GATEWAY_V2("lumi.gateway.v2", "Mi smart Home GatewayHub v2", THING_TYPE_GATEWAY),
     LUMI_GATEWAY_V3("lumi.gateway.v3", "Mi smart Home Gateway Hub v3", THING_TYPE_GATEWAY),
+
+
     LUMI_LIGHT_AQCN02("lumi.light.aqcn02", "Aqara LED Light Bulb (Tunable White)", THING_TYPE_LUMI),
     LUMI_LOCK_V1("lumi.lock.v1", "Door lock", THING_TYPE_LUMI),
     LUMI_LOCK_AQ1("lumi.lock.aq1", "Aqara Door Lock", THING_TYPE_LUMI),
@@ -114,6 +116,9 @@ public enum MiIoDevices {
     LUMI_SENSOR_HT_V1("lumi.sensor_ht.v1", "Mi Temperature and Humidity Sensor", THING_TYPE_LUMI),
     LUMI_SENSOR_WLEAK_AQ1("lumi.sensor_wleak.aq1", "Water Leak Sensor", THING_TYPE_LUMI),
     LUMI_WEATHER_V1("lumi.weather.v1", "Aqara Temperature and Humidity Sensor", THING_TYPE_LUMI),
+
+   // LUMI_SENSOR_MOTION_V2_AQ("lumi.sensor_motion.aq2", "Aqara Motion Sensor", THING_TYPE_LUMI),
+
     MIDEA_AIRCONDITION_V1("midea.aircondition.v1", "Midea AC-i Youth", THING_TYPE_UNSUPPORTED),
     MIDEA_AIRCONDITION_V2("midea.aircondition.v2", "Midea Air Conditioner v2", THING_TYPE_UNSUPPORTED),
     MIDEA_AIRCONDITION_XA1("midea.aircondition.xa1", "Midea AC-Cool Golden", THING_TYPE_UNSUPPORTED),

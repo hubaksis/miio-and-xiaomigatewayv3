@@ -468,13 +468,16 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
         }
     }
 
-    protected boolean initializeData() {
-        this.miioCom = getConnection();
-
+    protected void sendMiIoRequestToGetDeviceList(){
         if (this.miioCom != null && this instanceof MiIoGatewayHandler) {
             sendCommand(MiIoCommand.GET_DEVICE_LIST);
         }
+    }
 
+    protected boolean initializeData() {
+        this.miioCom = getConnection();
+
+        sendMiIoRequestToGetDeviceList();
         return true;
     }
 
@@ -679,8 +682,13 @@ public abstract class MiIoAbstractHandler extends BaseThingHandler implements Mi
         GatewayDevicesList message = new Gson().fromJson(str, GatewayDevicesList.class);
         logger.info("Found devices count: {}", message.result.size());
         logger.info("Devices: " + str);
+        getDevicesListRequestCompleted(message);
         //if(bridge != null)
         //    bridge.getDevicesListRequestCompleted(message);
 
+    }
+
+    protected void getDevicesListRequestCompleted(GatewayDevicesList deviceList){
+        //this one will be overridden in MiIoGatewayHandler to pass device list to the discovery class.
     }
 }
